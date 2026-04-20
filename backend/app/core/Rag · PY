@@ -1,0 +1,68 @@
+"""
+RAG Pipeline — LangChain + Ollama
+
+Architecture:
+- Uses ChatOllama with SystemMessage to force Arabic responses
+- Supports conversation history (list of {role, content} dicts)
+- Auto-selects RAG or Chat mode based on document count
+- Retry logic: RAG failure → fallback to Chat mode
+
+Key design decisions:
+- System prompt written in English for better model compliance
+- Messages API instead of PromptTemplate (better instruction following)
+- Direct retriever.invoke() instead of chain for more control
+"""
+
+from __future__ import annotations
+from typing import AsyncGenerator
+
+# from langchain_ollama import ChatOllama
+# from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+# from .vector_store import get_vector_store, get_documents_count
+# from .config import OLLAMA_MODEL, OLLAMA_BASE_URL
+
+_SYSTEM_CHAT = """\
+You are a helpful Arabic-speaking assistant.
+CRITICAL RULE: You MUST always respond in Arabic (العربية) only,
+regardless of the language of the question.
+Never respond in English, Spanish, French, or any other language."""
+
+_SYSTEM_RAG = """\
+You are a research assistant. Answer ONLY based on the provided documents.
+CRITICAL RULE: You MUST always respond in Arabic (العربية) only,
+regardless of the language of the documents or question.
+If the answer is not found in the documents, say so clearly in Arabic."""
+
+
+def answer(
+    question: str,
+    history: list[dict] | None = None,
+    use_rag: bool | None = None,
+    _retry: int = 0,
+) -> str:
+    """
+    Generate an answer with conversation history support.
+
+    Args:
+        question: User's question
+        history:  List of {"role": "user"|"assistant", "content": str}
+        use_rag:  None = auto-detect based on document count
+        _retry:   Internal retry counter
+
+    Returns:
+        Arabic answer string
+    """
+    raise NotImplementedError("Full implementation in private repo")
+
+
+async def answer_stream(
+    question: str,
+    history: list[dict] | None = None,
+    use_rag: bool | None = None,
+) -> AsyncGenerator[str, None]:
+    """
+    Streaming version — yields text chunks via AsyncGenerator.
+    Used with StreamingResponse for real-time output.
+    """
+    raise NotImplementedError("Full implementation in private repo")
+    yield  # make it a generator
