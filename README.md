@@ -209,7 +209,7 @@ Export as PNG (2x resolution)
 | Service | Platform | URL |
 |---------|----------|-----|
 | Backend | HuggingFace Spaces | [hussamfaisal-ai-research-backend.hf.space](https://hussamfaisal-ai-research-backend.hf.space) |
-| Frontend | Streamlit Cloud | [[ai-research-app.streamlit.app](https://ai-research-app.streamlit.app](https://mapsai.streamlit.app/)) |
+| Frontend | Streamlit Cloud | https://mapsai.streamlit.app |
 
 ---
 
